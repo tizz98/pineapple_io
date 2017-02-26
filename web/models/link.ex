@@ -42,9 +42,11 @@ defmodule PineappleIo.Link do
       |> Query.where([link, votes], [id: votes.link_id])
       |> Repo.aggregate(:count, :id)
 
-    if votes > 0 do
-      votes = votes - 1
-    end
+    votes =
+      cond do
+        votes <= 0 -> 0
+        true -> votes
+      end
 
     changeset = changeset(link, %{rank_score: votes / :math.pow(item_hour_age + 2, gravity)})
 
