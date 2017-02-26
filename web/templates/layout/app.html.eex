@@ -20,8 +20,8 @@
               <li><%= current_user(@conn).email %></li>
               <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></li>
             <% else %>
-              <li><%= link "Login", to: "/login" %></li>
-              <li><%= link "Register", to: registration_path(@conn, :new) %></li>
+              <li class="<%= if is_login_path?(@conn, :new) do %>active<% end %>"><%= link "Login", to: session_path(@conn, :new) %></li>
+              <li class="<%= if is_register_path?(@conn, :new) do %>active<% end %>"><%= link "Register", to: registration_path(@conn, :new) %></li>
             <% end %>
           </ul>
           <a class="navbar-brand" href="/">Pineapple.io News</a>
